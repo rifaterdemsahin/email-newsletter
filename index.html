@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Newsletter Signup - Rifat Erdemsahin</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .newsletter-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .newsletter-header {
+            margin-bottom: 30px;
+        }
+
+        .newsletter-title {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .newsletter-subtitle {
+            font-size: 1.1rem;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .newsletter-form {
+            margin-top: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+            font-size: 0.95rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-input.error {
+            border-color: #e74c3c;
+            background: #fdf2f2;
+        }
+
+        .form-input.success {
+            border-color: #27ae60;
+            background: #f0f9f0;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .loading {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .message {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            font-weight: 500;
+            display: none;
+        }
+
+        .message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .features {
+            margin-top: 30px;
+            text-align: left;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .feature-icon {
+            width: 20px;
+            height: 20px;
+            background: #667eea;
+            border-radius: 50%;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .privacy-note {
+            margin-top: 20px;
+            font-size: 0.85rem;
+            color: #888;
+            line-height: 1.4;
+        }
+
+        .privacy-note a {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .privacy-note a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 600px) {
+            .newsletter-container {
+                padding: 30px 20px;
+            }
+            
+            .newsletter-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="newsletter-container">
+        <div class="newsletter-header">
+            <h1 class="newsletter-title">📧 Newsletter</h1>
+            <p class="newsletter-subtitle">
+                Stay updated with the latest insights, tutorials, and updates from Rifat Erdemsahin. 
+                Join our community of learners and professionals.
+            </p>
+        </div>
+
+        <form class="newsletter-form" id="newsletterForm">
+            <div class="form-group">
+                <label for="email" class="form-label">Email Address *</label>
+                <input 
+                    type="email" 
+                    id="email" 
+                    name="email" 
+                    class="form-input" 
+                    placeholder="Enter your email address"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="firstName" class="form-label">First Name</label>
+                <input 
+                    type="text" 
+                    id="firstName" 
+                    name="firstName" 
+                    class="form-input" 
+                    placeholder="Your first name"
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="lastName" class="form-label">Last Name</label>
+                <input 
+                    type="text" 
+                    id="lastName" 
+                    name="lastName" 
+                    class="form-input" 
+                    placeholder="Your last name"
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="interests" class="form-label">Areas of Interest</label>
+                <select id="interests" name="interests" class="form-input">
+                    <option value="">Select your interests</option>
+                    <option value="web-development">Web Development</option>
+                    <option value="automation">Automation & n8n</option>
+                    <option value="devops">DevOps & Cloud</option>
+                    <option value="ai-ml">AI & Machine Learning</option>
+                    <option value="data-science">Data Science</option>
+                    <option value="tutorials">Tutorials & Guides</option>
+                    <option value="all">All Topics</option>
+                </select>
+            </div>
+
+            <button type="submit" class="submit-btn" id="submitBtn">
+                Subscribe to Newsletter
+            </button>
+
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p style="margin-top: 10px; color: #666;">Subscribing...</p>
+            </div>
+
+            <div class="message" id="message"></div>
+        </form>
+
+        <div class="features">
+            <div class="feature-item">
+                <div class="feature-icon">✓</div>
+                <span>Weekly insights and tutorials</span>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">✓</div>
+                <span>Exclusive automation tips</span>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">✓</div>
+                <span>Early access to new content</span>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">✓</div>
+                <span>Unsubscribe anytime</span>
+            </div>
+        </div>
+
+        <div class="privacy-note">
+            By subscribing, you agree to receive newsletters from Rifat Erdemsahin. 
+            We respect your privacy and will never share your information. 
+            <a href="/privacy-policy">Privacy Policy</a>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('newsletterForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const form = e.target;
+            const submitBtn = document.getElementById('submitBtn');
+            const loading = document.getElementById('loading');
+            const message = document.getElementById('message');
+            const emailInput = document.getElementById('email');
+            
+            // Get form data
+            const formData = new FormData(form);
+            const data = {
+                email: formData.get('email'),
+                firstName: formData.get('firstName'),
+                lastName: formData.get('lastName'),
+                interests: formData.get('interests'),
+                source: 'website',
+                timestamp: new Date().toISOString(),
+                userAgent: navigator.userAgent
+            };
+            
+            // Validate email
+            if (!data.email || !isValidEmail(data.email)) {
+                showMessage('Please enter a valid email address.', 'error');
+                emailInput.classList.add('error');
+                return;
+            }
+            
+            // Show loading state
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Subscribing...';
+            loading.style.display = 'block';
+            message.style.display = 'none';
+            
+            try {
+                // Send to n8n workflow
+                const response = await fetch('https://n8n.rifaterdemsahin.com/webhook/newsletter-signup', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                if (response.ok) {
+                    const result = await response.json();
+                    showMessage('🎉 Successfully subscribed! Welcome to our newsletter.', 'success');
+                    form.reset();
+                    emailInput.classList.remove('error');
+                    emailInput.classList.add('success');
+                    
+                    // Track successful subscription (optional analytics)
+                    if (typeof gtag !== 'undefined') {
+                        gtag('event', 'newsletter_signup', {
+                            'event_category': 'engagement',
+                            'event_label': 'website'
+                        });
+                    }
+                } else {
+                    throw new Error('Subscription failed');
+                }
+                
+            } catch (error) {
+                console.error('Subscription error:', error);
+                showMessage('❌ Something went wrong. Please try again or contact support.', 'error');
+            } finally {
+                // Reset button state
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Subscribe to Newsletter';
+                loading.style.display = 'none';
+            }
+        });
+        
+        function showMessage(text, type) {
+            const message = document.getElementById('message');
+            message.textContent = text;
+            message.className = `message ${type}`;
+            message.style.display = 'block';
+            
+            // Auto-hide after 5 seconds
+            setTimeout(() => {
+                message.style.display = 'none';
+            }, 5000);
+        }
+        
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+        
+        // Real-time email validation
+        document.getElementById('email').addEventListener('input', function(e) {
+            const input = e.target;
+            if (input.value && !isValidEmail(input.value)) {
+                input.classList.add('error');
+                input.classList.remove('success');
+            } else if (input.value && isValidEmail(input.value)) {
+                input.classList.remove('error');
+                input.classList.add('success');
+            } else {
+                input.classList.remove('error', 'success');
+            }
+        });
+        
+        // Clear success state on input change
+        document.getElementById('email').addEventListener('input', function(e) {
+            if (e.target.classList.contains('success')) {
+                setTimeout(() => {
+                    e.target.classList.remove('success');
+                }, 2000);
+            }
+        });
+    </script>
+</body>
+</html>
